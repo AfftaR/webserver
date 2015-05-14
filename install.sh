@@ -14,6 +14,8 @@ INSTALL_POSTGRES="YES"
 INSTALL_MYSQL="YES"
 INSTALL_SUPERVISOR="YES"
 INSTALL_NODE="YES"
+INSTALL_MEMCACHED="NO"
+INSTALL_REDIS="YES"
 DISTUPGRADE="YES"
 
 # Sysctl configuration
@@ -73,6 +75,8 @@ Pin-Priority: -1
 #Pin-Priority: 600 
 EOF
 
+apt-get install -y aptitude
+
 echo "aptitude update"
 # Update repositories
 aptitude update
@@ -108,13 +112,12 @@ aptitude install -y \
     python python-setuptools python-dev \
     libxml2-dev libxslt1-dev \
     gcc g++ \
-    libcurl4-openssl-dev \
-    memcached libmemcached-dev \
+    libcurl4-openssl-dev libmemcached-dev \
     libjpeg-dev libfreetype6-dev \
     libmysqld-dev \
     bind9-host \
     postgresql-server-dev-9.4 \
-    unzip redis-server make \
+    unzip make \
     python-crypto geoip-database \
     libc-ares-dev \
     openvpn iftop iotop \
@@ -129,6 +132,14 @@ fi
 
 if [ "$INSTALL_MYSQL" == "YES" ]; then
     aptitude install -y mysql-server-5.5
+fi
+
+if [ "$INSTALL_MEMCACHED" == "YES" ]; then
+    aptitude install -y memcached
+fi
+
+if [ "$INSTALL_REDIS" == "YES" ]; then
+    aptitude install -y redis-server
 fi
 
 # TODO:
