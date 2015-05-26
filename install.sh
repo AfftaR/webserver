@@ -596,6 +596,9 @@ if [ "$INSTALL_NODE" == "YES" ]; then
     npm install -g bower
 fi
 
+# Change space reserved for root (from default 5% to 1%)
+tune2fs -m1 $(findmnt -n -o SOURCE /)
+
 echo "It is better to reboot now"
 
 
