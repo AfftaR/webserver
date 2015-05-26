@@ -16,6 +16,7 @@ INSTALL_SUPERVISOR="YES"
 INSTALL_NODE="YES"
 INSTALL_MEMCACHED="NO"
 INSTALL_REDIS="YES"
+INSTALL_ELASTICSEARCH="NO"
 DISTUPGRADE="YES"
 
 # Sysctl configuration
@@ -32,6 +33,11 @@ if [ "$INSTALL_MONGO" == "YES" ]; then
     # mongo key
     gpg --keyserver pgp.mit.edu --recv-keys 9ECBEC467F0CEB10
     gpg --armor --export 9ECBEC467F0CEB10 | apt-key add -
+fi
+
+if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
+    wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+    echo "deb http://packages.elastic.co/elasticsearch/1.5/debian stable main" | sudo tee  /etc/apt/sources.list.d/elasticsearch.list
 fi
 
 # WTF?
@@ -69,6 +75,10 @@ Pin-Priority: 200
 Package: *
 Pin: release o=Debian
 Pin-Priority: -1
+
+Package: elasticsearch
+Pin: origin packages.elastic.co
+Pin-Priority: 901
 
 #Package: *
 #Pin: origin some-domain.com
@@ -140,6 +150,10 @@ fi
 
 if [ "$INSTALL_REDIS" == "YES" ]; then
     aptitude install -y redis-server
+fi
+
+if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
+    aptitude install -y elasticsearch
 fi
 
 # TODO:
@@ -495,6 +509,11 @@ fi
 if [ "$INSTALL_MONGO" == "YES" ]; then 
     update-rc.d mongodb defaults
     /etc/init.d/mongodb start
+fi
+
+if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
+    update-rc.d elasticsearch defaults
+    /etc/init.d/elasticsearch start
 fi
 
 if [ "$INSTALL_SQUID" == "YES" ]; then
