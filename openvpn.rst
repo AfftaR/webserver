@@ -2,37 +2,47 @@
 # * https://openvpn.net/index.php/open-source/documentation/howto.html 
 # * http://habrahabr.ru/post/188474/
 
-apt-get install -y openvpn
+# START
+apt-get install -y openvpn easy-rsa
 cd /etc/openvpn
 cp -r /usr/share/easy-rsa .
-cd easy-rsa
+cd /etc/openvpn/easy-rsa
 . ./vars
 ./clean-all
-./build-ca # enter common name "server"
-./build-key-server server # enter common name "server"
-# build-key <client-name>
+./build-ca
+./build-key-server PROJECT_server
+./build-key PROJECT_client
 ./build-dh
+cd /etc/openvpn
 zcat /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > server.conf
 # edit server.conf:
 # push "redirect-gateway def1"
 # ca /etc/openvpn/easy-rsa/keys/ca.crt
-# cert /etc/openvpn/easy-rsa/keys/server.crt
-# key /etc/openvpn/easy-rsa/keys/server.key
+# cert /etc/openvpn/easy-rsa/keys/PROJECT_server.crt
+# key /etc/openvpn/easy-rsa/keys/PROJECT_server.key
 # dh /etc/openvpn/easy-rsa/keys/dh2048.pem
 echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
 sysctl -w net.ipv4.ip_forward=1
-#echo "-A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE" > /etc/rc.local
-#iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+if ! grep MASQUERADE /etc/rc.local; then
+    echo "-A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE" > /etc/rc.local
+fi
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 update-rc.d openvpn defaults
+# CURRENT_POSITION
+# FINISH
 
 
 # Client config
 # cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /etc/openvpn/
-# Copy ca.crt, <client-name>.crt and <client-name>.key from remote server to
-# /etc/openvpn/keys directory
+# Copy:
+# * ca.crt
+# * PROJECT_client.crt
+# * PROJECT_client.key
+# from PROJECT server to
+# /etc/openvpn/keys/PROJECT directory
 # edit client.conf:
 # remote <server-hostname> 1194
-# ca keys/ca.crt
-# cert keys/<client-name>.crt
-# key keys/<client-name>.key
+# ca /etc/openvpn/keys/PROJECT/ca.crt
+# cert /etc/openvpn/keys/PROJECT/<client-name>.crt
+# key /etc/openvpn/keys/PROJECT/<client-name>.key
 # update-rc.d openvpn defaults
