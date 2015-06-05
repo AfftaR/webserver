@@ -9,15 +9,15 @@ WEB_USER="web"
 
 # Install and configure mongodb
 INSTALL_MONGO="YES"
-INSTALL_SQUID="NO"
-INSTALL_POSTGRES="YES"
-INSTALL_MYSQL="YES"
-INSTALL_SUPERVISOR="YES"
-INSTALL_NODE="YES"
+
+INSTALL_POSTGRES="NO"
+INSTALL_MYSQL="NO"
+INSTALL_SUPERVISOR="NO"
+INSTALL_NODE="NO"
 INSTALL_MEMCACHED="NO"
-INSTALL_REDIS="YES"
+INSTALL_REDIS="NO"
 INSTALL_ELASTICSEARCH="NO"
-DISTUPGRADE="YES"
+INSTALL_SQUID="NO"
 
 # Sysctl configuration
 echo "vm.overcommit_memory=1" > /etc/sysctl.conf
@@ -91,10 +91,8 @@ echo "aptitude update"
 # Update repositories
 aptitude update
 
-if [ "$DISTUPGRADE" == "YES" ]; then
-    echo "Doing aptitude dist-upgrade"
-    aptitude dist-upgrade
-fi
+echo "Doing aptitude dist-upgrade"
+aptitude dist-upgrade
 
 # Setup locales
 aptitude install -y locales 
