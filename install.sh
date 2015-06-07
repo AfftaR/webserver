@@ -131,7 +131,8 @@ aptitude install -y \
     openvpn iftop iotop \
     numactl unrar \
     python3.4 python3.4-dev python3-setuptools\
-    uwsgi uwsgi-plugin-python3
+    uwsgi uwsgi-plugin-python3 \
+    pigz
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     aptitude install -y \
