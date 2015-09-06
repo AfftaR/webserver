@@ -24,7 +24,7 @@ zcat /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > server
 echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
 sysctl -w net.ipv4.ip_forward=1
 if ! grep MASQUERADE /etc/rc.local; then
-    echo "-A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE" > /etc/rc.local
+    echo "iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE" > /etc/rc.local
 fi
 iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 update-rc.d openvpn defaults

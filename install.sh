@@ -120,7 +120,7 @@ aptitude install -y \
     python python-setuptools python-dev \
     libxml2-dev libxslt1-dev \
     gcc g++ \
-    libcurl4-openssl-dev libmemcached-dev \
+    libcurl4-openssl-dev libmemcached-dev libssl-dev \
     libjpeg-dev libfreetype6-dev \
     libmysqld-dev \
     bind9-host \
@@ -132,7 +132,7 @@ aptitude install -y \
     numactl unrar \
     python3.4 python3.4-dev python3-setuptools\
     uwsgi uwsgi-plugin-python3 \
-    pigz
+    pigz nfs-common
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     aptitude install -y \
@@ -602,10 +602,23 @@ echo $SERVER_NAME > /etc/hostname
 echo "127.0.0.1 $SERVER_NAME" >> /etc/hosts
 hostname $SERVER_NAME
 
+echo '#!/bin/sh
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+echo "!!! All iptables rules removed !!!"
+' > /sbin/fw_clear.sh
+chmod u+x /sbin/fw_clear.sh
+
+# TODO: put fw_clear.sh into into /etc/rc.local
+
 echo "It is better to reboot now"
-
-
-
 # Sphinx
 # ======
 # cd /tmp
