@@ -399,7 +399,7 @@ if [ "$INSTALL_POSTGRES" == "YES" ]; then
 fi
 
 if [ "$INSTALL_MYSQL" == "YES" ]; then
-    mysql -e "grant all privileges on *.* to web@localhost identified by 'web-**'"
+    #mysql -e "grant all privileges on *.* to web@localhost identified by 'web-**'"
 fi
 
 echo "nginx django-site template"
@@ -465,8 +465,8 @@ fi
 
 if [ "$INSTALL_MYSQL" == "YES" ]; then
 echo '[client]
-user=web
-password=web-**' > /home/$WEB_USER/.my.cnf
+user=root
+password=' > /home/$WEB_USER/.my.cnf
 fi
 
 echo '[uwsgi]
