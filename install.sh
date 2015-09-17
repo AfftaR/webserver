@@ -29,10 +29,9 @@ wget -O ~/.vimrc http://dumpz.org/25712/nixtext/
 
 if [ "$INSTALL_MONGO" == "YES" ]; then
     echo "Add extra apt repositories"
-    echo "deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen" > /etc/apt/sources.list.d/mongodb.list
+    echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" > /etc/apt/sources.list.d/mongodb.list
     # mongo key
-    gpg --keyserver pgp.mit.edu --recv-keys 9ECBEC467F0CEB10
-    gpg --armor --export 9ECBEC467F0CEB10 | apt-key add -
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 fi
 
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
