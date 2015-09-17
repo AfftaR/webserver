@@ -11,7 +11,7 @@ cd /etc/openvpn/easy-rsa
 ./clean-all
 ./build-ca
 ./build-key-server PROJECT_server
-./build-key PROJECT_client
+./build-key PROJECT_CLIENT_client
 ./build-dh
 cd /etc/openvpn
 zcat /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > server.conf
@@ -24,6 +24,7 @@ zcat /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > server
 echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
 sysctl -w net.ipv4.ip_forward=1
 if ! grep MASQUERADE /etc/rc.local; then
+    # > operation is destructive, it deletes previous content of the file
     echo "iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE" > /etc/rc.local
 fi
 iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
