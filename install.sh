@@ -192,6 +192,9 @@ easy_install3 -U pip distribute
 pip3 install -U virtualenv sr fabric pillow \
     pymongo lxml pycurl grab argparse redis qr
 
+# Make default pip2
+pip2 install -I pip
+
 if [ "$INSTALL_SUPERVISOR" == "YES" ]; then
     pip install --upgrade --pre supervisor
     cat > /etc/supervisord.conf << EOF
