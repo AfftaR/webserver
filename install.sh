@@ -20,7 +20,16 @@ INSTALL_ELASTICSEARCH="NO"
 INSTALL_SQUID="NO"
 
 # Sysctl configuration
-echo "vm.overcommit_memory=1" > /etc/sysctl.conf
+echo "vm.overcommit_memory=1" >> /etc/sysctl.conf
+# http://kaivanov.blogspot.de/2010/09/linux-tcp-tuning.html
+echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf
+echo "net.core.wmem_max = 33554432" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_rmem = 4096 87380 33554432" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_wmem = 4096 65536 33554432" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_window_scaling = 1" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_timestamps = 1" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_sack = 1" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_no_metrics_save = 1" >> /etc/sysctl.conf
 sysctl -p
 
 echo "vim config"

@@ -21,11 +21,12 @@ zcat /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > server
 # cert /etc/openvpn/easy-rsa/keys/PROJECT_server.crt
 # key /etc/openvpn/easy-rsa/keys/PROJECT_server.key
 # dh /etc/openvpn/easy-rsa/keys/dh2048.pem
-echo "net.ipv4.ip_forward = 1" > /etc/sysctl.conf
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 sysctl -w net.ipv4.ip_forward=1
 if ! grep MASQUERADE /etc/rc.local; then
     # > operation is destructive, it deletes previous content of the file
     echo "iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE" > /etc/rc.local
+    echo "exit 0" >> /etc/rc.local
 fi
 iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 update-rc.d openvpn defaults
