@@ -28,22 +28,22 @@ How to use it?
 
 4) Check your /etc/apt/sources.list. It should contain jessie (stable) repository.
 
-    To speed up apt operations you may choose debian repo mirror close to your
-    server.  For example, if your server located in Nederlands that has
-    code NL then you might replace ftp.us.debian.org, if such string exists in
-    your config, with ftp.nl.debian.org.
+To speed up apt operations you may choose debian repo mirror close to your
+server.  For example, if your server located in Nederlands that has
+code NL then you might replace ftp.us.debian.org, if such string exists in
+your config, with ftp.nl.debian.org.
 
-    Do not forget to add "contrib non-free" components.
+Do not forget to add "contrib non-free" components.
+
+Example of original digitalocean sources.list::
+
+    deb http://ftp.nl.debian.org/debian jessie main
+    deb http://security.debian.org/ jessie/updates
     
-    Example of original digitalocean sources.list::
+After modification::
 
-        deb http://ftp.nl.debian.org/debian jessie main
-        deb http://security.debian.org/ jessie/updates
-        
-    After modification::
-
-        deb http://ftp.nl.debian.org/debian jessie main contrib non-free
-        deb http://security.debian.org/ jessie/updates main contrib non-free
+    deb http://ftp.nl.debian.org/debian jessie main contrib non-free
+    deb http://security.debian.org/ jessie/updates main contrib non-free
 
 
 5) Update install.sh script. Change INSTALL_* variables to allow or disallow
@@ -65,12 +65,10 @@ Documentation?
 
 Read source code :)
 
-Some extra comments in russian could be found here:
- * http://habrahabr.ru/blogs/django/120363/
+Some extra comments in russian could be found here: http://habrahabr.ru/blogs/django/120363/
 
 
 Feedback?
 =========
 
-Create ticket on github: http://github.com/lorien/webserver
-or drop mail to lorien@lorien.name
+Create ticket on github http://github.com/lorien/webserver or drop mail to lorien@lorien.name
