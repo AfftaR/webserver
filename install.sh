@@ -139,7 +139,7 @@ aptitude install -y \
     openvpn iftop iotop \
     numactl unrar \
     python3.4 python3.4-dev python3-setuptools\
-    pigz nfs-common curl
+    pigz nfs-common curl firmware-linux-nonfree
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     aptitude install -y \
@@ -256,6 +256,10 @@ fi
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     echo "postgres web user"
     su postgres -c "cd /; createuser -s web"
+    # TODO: update postgresql.conf
+    # 1) set shared_buffers to 25% ram
+    # 2) set effective_cache_size to 50% ram
+    # 3) set synchronous_commit=off
 fi
 
 if [ "$INSTALL_MYSQL" == "YES" ]; then
