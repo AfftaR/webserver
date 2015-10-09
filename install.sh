@@ -177,7 +177,7 @@ fi
 # ln -s /usr/lib/i386-linux-gnu/libfreetype.so /usr/lib/
 
 if [ "$INSTALL_MONGO" == "YES" ]; then
-    aptitude install -y mongodb-10gen
+    aptitude install -y mongodb-org
 fi
 
 if [ "$INSTALL_SQUID" == "YES" ]; then
@@ -197,7 +197,7 @@ pip3 install -U virtualenv sr fabric pillow \
     pymongo lxml pycurl grab argparse redis qr gunicorn
 
 # Second install python2 things to make them be default things
-easy_install-2.7 -I pip
+easy_install-2.7 -U pip
 pip2 install -I distribute virtualenv sr fabric pillow \
     pymongo lxml pycurl grab argparse redis qr gunicorn
 
@@ -263,6 +263,7 @@ if [ "$INSTALL_POSTGRES" == "YES" ]; then
 fi
 
 if [ "$INSTALL_MYSQL" == "YES" ]; then
+    echo ""
     #mysql -e "grant all privileges on *.* to web@localhost identified by 'web-**'"
 fi
 
