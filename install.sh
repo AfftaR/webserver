@@ -2,6 +2,13 @@
 
 # CONFIGURATION
 
+# TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten] 
+#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
+#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten]
+# TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 # Base dir where all website files will be located
 # source code, logs, pids, configs
 WEB_DIR="/web"
@@ -22,14 +29,14 @@ INSTALL_SQUID="NO"
 # Sysctl configuration
 echo "vm.overcommit_memory=1" >> /etc/sysctl.conf
 # http://kaivanov.blogspot.de/2010/09/linux-tcp-tuning.html
-echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf
-echo "net.core.wmem_max = 33554432" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_rmem = 4096 87380 33554432" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_wmem = 4096 65536 33554432" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_window_scaling = 1" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_timestamps = 1" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_sack = 1" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_no_metrics_save = 1" >> /etc/sysctl.conf
+#echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf
+#echo "net.core.wmem_max = 33554432" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_rmem = 4096 87380 33554432" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_wmem = 4096 65536 33554432" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_window_scaling = 1" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_timestamps = 1" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_sack = 1" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_no_metrics_save = 1" >> /etc/sysctl.conf
 sysctl -p
 
 echo "vim config"
