@@ -1,14 +1,12 @@
 #!/bin/bash
 
+# TODO:
+# * WARNING: /sys/kernel/mm/transparent_hugepage/defragis 'always'.
+#   We suggest setting it to 'never'
+# * Option for server name
+# * disable swap
+
 # CONFIGURATION
-
-# TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten] 
-#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
-#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
-#2015-10-09T16:34:47.565+0000 I CONTROL  [initandlisten]
-# TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 # Base dir where all website files will be located
 # source code, logs, pids, configs
 WEB_DIR="/web"
@@ -104,13 +102,13 @@ apt-get install -y aptitude
 
 echo "aptitude update"
 # Update repositories
-aptitude update
+apt-get update
 
 echo "Doing aptitude dist-upgrade"
-aptitude dist-upgrade
+apt-get dist-upgrade
 
 # Setup locales
-aptitude install -y locales 
+apt-get install -y locales 
 echo "LANG=en_US.UTF-8" > /etc/default/locale
 cat > /etc/locale.gen << EOF
 en_US.UTF-8 UTF-8
@@ -118,7 +116,7 @@ ru_RU.UTF-8 UTF-8
 EOF
 locale-gen
 
-echo "aptitude install"
+echo "apt-get install"
 # psmsic --> pkill
 # apache-utils --> ab
 # libxml2-dev libxslt1-dev --> build lxml from source
@@ -126,7 +124,7 @@ echo "aptitude install"
 # libjpeg8-dev libfreetype6-dev --> build PIL from source
 # postgresql-server-dev-9.4 --> build psycopg from source
 # libmysqld-dev --> build mysql driver from source
-aptitude install -y \
+apt-get install -y \
     perl perl-modules perl-base \
     vim-nox \
     psmisc screen apache2-utils whois sudo less gettext \
@@ -149,24 +147,24 @@ aptitude install -y \
     pigz nfs-common curl firmware-linux-nonfree
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
-    aptitude install -y \
+    apt-get install -y \
     postgresql-9.4 python-psycopg2
 fi
 
 if [ "$INSTALL_MYSQL" == "YES" ]; then
-    aptitude install -y mysql-server-5.5
+    apt-get install -y mysql-server-5.5
 fi
 
 if [ "$INSTALL_MEMCACHED" == "YES" ]; then
-    aptitude install -y memcached
+    apt-get install -y memcached
 fi
 
 if [ "$INSTALL_REDIS" == "YES" ]; then
-    aptitude install -y redis-server
+    apt-get install -y redis-server
 fi
 
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
-    aptitude install -y elasticsearch
+    apt-get install -y elasticsearch
 fi
 
 # TODO:
@@ -184,11 +182,11 @@ fi
 # ln -s /usr/lib/i386-linux-gnu/libfreetype.so /usr/lib/
 
 if [ "$INSTALL_MONGO" == "YES" ]; then
-    aptitude install -y mongodb-org
+    apt-get install -y mongodb-org
 fi
 
 if [ "$INSTALL_SQUID" == "YES" ]; then
-    aptitude install -y squid
+    apt-get install -y squid
 fi
 
 echo "vim default editor"
