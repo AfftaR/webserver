@@ -69,12 +69,12 @@ if [ "$INSTALL_MONGO" == "YES" ]; then
     echo "Add extra apt repositories"
     echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" > /etc/apt/sources.list.d/mongodb.list
     # mongo key
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+    apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 fi
 
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
-    wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-    echo "deb http://packages.elastic.co/elasticsearch/1.5/debian stable main" | sudo tee  /etc/apt/sources.list.d/elasticsearch.list
+    wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+    echo "deb http://packages.elastic.co/elasticsearch/1.5/debian stable main" | tee  /etc/apt/sources.list.d/elasticsearch.list
 fi
 
 # WTF?
