@@ -5,6 +5,29 @@
 #   We suggest setting it to 'never'
 # * Option for server name
 # * disable swap
+# * noatime to /etc/fstab
+
+# TODO dnsmasq
+# apt-get install -y dnsmasq
+# put to /etc/dnsmasq.conf
+#domain-needed
+#bogus-priv
+#neg-ttl=3600
+#server=8.8.8.8
+#server=8.8.4.4
+#server=208.67.222.222 # opendns
+#server=208.67.220.220 # opendns
+#all-servers
+#cache-size=10000
+#dns-forward-max=300
+#cat /etc/resolv.conf > /tmp/resolv.backup
+#echo "nameserver 127.0.0.1" > /etc/resolv.conf
+#cat /tmp/resolv.backup >> /etc/resolv.conf
+#chattr +i /etc/resolv.conf
+#systemctl stop named
+#apt-get remove named # WTF?
+#systemctl enable dnsmasq
+#systemctl start dnsmasq
 
 # CONFIGURATION
 # Base dir where all website files will be located
@@ -35,6 +58,7 @@ echo "vm.overcommit_memory=1" >> /etc/sysctl.conf
 #echo "net.ipv4.tcp_timestamps = 1" >> /etc/sysctl.conf
 #echo "net.ipv4.tcp_sack = 1" >> /etc/sysctl.conf
 #echo "net.ipv4.tcp_no_metrics_save = 1" >> /etc/sysctl.conf
+#echo "net.ipv4.netfilter.ip_conntrack_max = 262144" >> /etc/sysctl.conf
 sysctl -p
 
 echo "vim config"
@@ -143,8 +167,9 @@ apt-get install -y \
     libc-ares-dev \
     openvpn iftop iotop \
     numactl unrar \
-    python3.4 python3.4-dev python3-setuptools\
-    pigz nfs-common curl firmware-linux-nonfree
+    python3.4 python3.4-dev python3-setuptools \
+    pigz nfs-common curl firmware-linux-nonfree \
+    lshw
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     apt-get install -y \

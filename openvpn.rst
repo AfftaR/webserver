@@ -30,21 +30,22 @@ if ! grep MASQUERADE /etc/rc.local; then
 fi
 iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 update-rc.d openvpn defaults
-# CURRENT_POSITION
-# FINISH
+# Check that openvpn --config /etc/openvpn/server.conf works without error
+systemctl start openvpn
 
 
 # Client config
-# cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf /etc/openvpn/
-# Copy:
-# * ca.crt
-# * PROJECT_client.crt
-# * PROJECT_client.key
-# from PROJECT server to
-# /etc/openvpn/keys/PROJECT directory
+# cd /etc/openvpen
+# cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf .
+# mkdir keys/PROJECT
+# scp PROJECT:/etc/openvpn/easy-rsa/keys/ca.crt keys/PROJECT
+# scp PROJECT:/etc/openvpn/easy-rsa/keys/PROJECT_CLIENT_client.crt keys/PROJECT
+# scp PROJECT:/etc/openvpn/easy-rsa/keys/PROJECT_CLIENT_client.key keys/PROJECT
 # edit client.conf:
 # remote <server-hostname> 1194
 # ca /etc/openvpn/keys/PROJECT/ca.crt
-# cert /etc/openvpn/keys/PROJECT/<client-name>.crt
-# key /etc/openvpn/keys/PROJECT/<client-name>.key
+# cert /etc/openvpn/keys/PROJECT/PROJECT_CLIENT_client.crt
+# key /etc/openvpn/keys/PROJECT/PROJECT_CLIENT_client.key
+# check connection with openvpn --config client.conf
 # update-rc.d openvpn defaults
+# systemctl start openvpn
