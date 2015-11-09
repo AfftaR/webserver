@@ -129,7 +129,7 @@ echo "aptitude update"
 apt-get update
 
 echo "Doing aptitude dist-upgrade"
-apt-get dist-upgrade
+apt-get -y dist-upgrade
 
 # Setup locales
 apt-get install -y locales 
