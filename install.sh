@@ -223,12 +223,12 @@ echo "python tools"
 
 # First install python3 things
 easy_install-3.4 -U pip distribute
-pip3 install -U virtualenv sr fabric pillow \
+pip3 install -U virtualenv sr pillow \
     pymongo lxml pycurl grab argparse redis qr gunicorn
 
 # Second install python2 things to make them be default things
 easy_install-2.7 -U pip
-pip2 install -I distribute virtualenv sr fabric pillow \
+pip2 install -I distribute virtualenv sr pillow \
     pymongo lxml pycurl grab argparse redis qr gunicorn
 
 if [ "$INSTALL_SUPERVISOR" == "YES" ]; then
