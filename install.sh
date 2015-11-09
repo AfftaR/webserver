@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# TODO:
-# * WARNING: /sys/kernel/mm/transparent_hugepage/defragis 'always'.
-#   We suggest setting it to 'never'
-# * Option for server name
-# * disable swap
-# * noatime to /etc/fstab
-
 # TODO dnsmasq
 # apt-get install -y dnsmasq
 # put to /etc/dnsmasq.conf
@@ -84,6 +77,8 @@ mv /tmp/fstab /etc/fstab
 
 # WTF?
 apt-get install -y debian-keyring
+
+# ??? systemctl enable rpcbind
 
 # Apt utils
 apt-get install -y lsb-release
@@ -503,7 +498,9 @@ chmod u+x /sbin/fw_clear.sh
 
 # TODO: put fw_clear.sh into into /etc/rc.local
 
-echo "It is better to reboot now"
+echo "!! Here is content of /etc/fstab. Check it is OK."
+cat /etc/fstab
+echo "!! It is better to reboot now"
 # Sphinx
 # ======
 # cd /tmp
