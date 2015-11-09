@@ -72,7 +72,7 @@ fi
 
 echo "Add noatime to /etc/fstab"
 cp /etc/fstab ~/fstab.backup
-awk '$2=="/" && $3=="ext4" && $4!~/noatime/ {$4=$4",noatime"} 1' /tmp/fstab > /tmp/fstab
+awk '$2=="/" && $3=="ext4" && $4!~/noatime/ {$4=$4",noatime"} 1' /etc/fstab > /tmp/fstab
 mv /tmp/fstab /etc/fstab
 
 # WTF?
@@ -283,7 +283,7 @@ WantedBy=multi-user.target
 EOF
 fi
 
-if [ "$INSTALL_MONGO" == "YES"; then
+if [ "$INSTALL_MONGO" == "YES" ]; then
      cat > /etc/init.d/disable-transparent-hugepages << EOF
 #!/bin/sh
 ### BEGIN INIT INFO
@@ -318,6 +318,7 @@ EOF
     chmod 755 /etc/init.d/disable-transparent-hugepages
     update-rc.d disable-transparent-hugepages defaults
     /etc/init.d/disable-transparent-hugepages start
+fi
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     echo "postgres web user"
