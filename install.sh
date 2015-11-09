@@ -77,6 +77,11 @@ if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
     echo "deb http://packages.elastic.co/elasticsearch/1.5/debian stable main" | tee  /etc/apt/sources.list.d/elasticsearch.list
 fi
 
+echo "Add noatime to /etc/fstab"
+cp /etc/fstab ~/fstab.backup
+awk '$2=="/" && $3=="ext4" && $4!~/noatime/ {$4=$4",noatime"} 1' /tmp/fstab > /tmp/fstab
+mv /tmp/fstab /etc/fstab
+
 # WTF?
 apt-get install -y debian-keyring
 
