@@ -317,7 +317,7 @@ if [ "$INSTALL_MONGO" == "YES" ]; then
 #                    database performance.
 ### END INIT INFO
 
-case $1 in
+case \$1 in
   start)
     if [ -d /sys/kernel/mm/transparent_hugepage ]; then
       thp_path=/sys/kernel/mm/transparent_hugepage
@@ -327,8 +327,8 @@ case $1 in
       return 0
     fi
 
-    echo 'never' > ${thp_path}/enabled
-    echo 'never' > ${thp_path}/defrag
+    echo 'never' > \${thp_path}/enabled
+    echo 'never' > \${thp_path}/defrag
 
     unset thp_path
     ;;
