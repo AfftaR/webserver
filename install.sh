@@ -22,6 +22,11 @@
 #systemctl enable dnsmasq
 #systemctl start dnsmasq
 
+# TODO:
+# somaxconn
+# net.ipv4.tcp_max_syn_backlog = 4096
+# net.ipv4.tcp_syncookies = 1
+
 # CONFIGURATION
 # Base dir where all website files will be located
 # source code, logs, pids, configs
@@ -41,18 +46,32 @@ INSTALL_ELASTICSEARCH="NO"
 INSTALL_SQUID="NO"
 
 # Sysctl configuration
-echo "vm.overcommit_memory=1" >> /etc/sysctl.conf
-# http://kaivanov.blogspot.de/2010/09/linux-tcp-tuning.html
-#echo "net.core.rmem_max = 33554432" >> /etc/sysctl.conf
-#echo "net.core.wmem_max = 33554432" >> /etc/sysctl.conf
-#echo "net.ipv4.tcp_rmem = 4096 87380 33554432" >> /etc/sysctl.conf
-#echo "net.ipv4.tcp_wmem = 4096 65536 33554432" >> /etc/sysctl.conf
-#echo "net.ipv4.tcp_window_scaling = 1" >> /etc/sysctl.conf
-#echo "net.ipv4.tcp_timestamps = 1" >> /etc/sysctl.conf
-#echo "net.ipv4.tcp_sack = 1" >> /etc/sysctl.conf
-#echo "net.ipv4.tcp_no_metrics_save = 1" >> /etc/sysctl.conf
-#echo "net.ipv4.netfilter.ip_conntrack_max = 262144" >> /etc/sysctl.conf
+cat >> /etc/sysctl.conf << EOF
+vm.overcommit_memory=1" >> /etc/sysctl.conf
+net.ipv4.netfilter.ip_conntrack_max=1548576
+net.ipv4.netfilter.ip_conntrack_tcp_timeout_established=1200
+net.ipv4.tcp_fin_timeout=20
+net.ipv4.tcp_keepalive_time=1800
+net.ipv4.tcp_keepalive_probes=2
+net.ipv4.tcp_keepalive_intvl=15
+vm.swappiness=1
+net.ipv4.ip_local_port_range="15000 61000"
+#net.core.rmem_max = 16777216
+#net.core.wmem_max = 16777216
+#net.core.rmem_default = 16777216
+#net.core.wmem_default = 16777216
+#net.core.optmem_max = 40960
+#net.ipv4.tcp_rmem = 4096 87380 16777216
+#net.ipv4.tcp_wmem = 4096 65536 16777216
+net.ipv4.tcp_no_metrics_save=1
+EOF
 sysctl -p
+
+cat > /etc/rc.local << EOF
+#!/bin/sh -e
+echo 32768 > /sys/module/nf_conntrack/parameters/hashsize
+exit 0
+EOF
 
 echo "vim config"
 # Download vim config
@@ -169,7 +188,7 @@ apt-get install -y \
     numactl unrar \
     python3.4 python3.4-dev python3-setuptools \
     pigz nfs-common curl firmware-linux-nonfree \
-    lshw
+    lshw conntrack conntrackd
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     apt-get install -y \
