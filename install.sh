@@ -26,14 +26,13 @@
 # net.ipv4.tcp_max_syn_backlog = 4096
 # net.ipv4.tcp_syncookies = 1
 # net.core.somaxconn = 1024
-# * check that contrib non-free things are in sources.list lines
 
 # CONFIGURATION
 # Base dir where all website files will be located
 # source code, logs, pids, configs
 WEB_DIR="/web"
 WEB_USER="web"
-SERVER_NAME="server"
+SERVER_NAME="DEFAULT_SERVER"
 
 # Install and configure mongodb
 INSTALL_MONGO="YES"
@@ -45,6 +44,23 @@ INSTALL_MEMCACHED="NO"
 INSTALL_REDIS="NO"
 INSTALL_ELASTICSEARCH="NO"
 INSTALL_SQUID="NO"
+
+if [ $SERVER_NAME == "DEFAULT_SERVER" ]; then
+    echo "[ERROR] You forgot to change \$SERVER_NAME variable"
+    exit 1
+fi
+
+if ! grep -q "non-free" /etc/apt/sources.list; then
+    echo '[ERROR] Not found "non-free" in /etc/apt/sources.list'
+    exit 1
+fi
+
+if ! grep -q "jessie" /etc/apt/sources.list; then
+    echo '[ERROR] Not found "jessie" in /etc/apt/sources.list'
+    exit 1
+fi
+exit 0
+
 
 # Sysctl configuration
 cat >> /etc/sysctl.conf << EOF
@@ -519,9 +535,9 @@ chmod u+x /sbin/fw_clear.sh
 
 # TODO: put fw_clear.sh into into /etc/rc.local
 
-echo "!! Here is content of /etc/fstab. Check it is OK."
+echo "[DEBUG] Content of /etc/fstab. Check it is OK."
 cat /etc/fstab
-echo "!! It is better to reboot now"
+echo "[HINT] Reboot server to ensure you have not break something"
 # Sphinx
 # ======
 # cd /tmp
