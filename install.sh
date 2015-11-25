@@ -23,9 +23,10 @@
 #systemctl start dnsmasq
 
 # TODO:
-# somaxconn
 # net.ipv4.tcp_max_syn_backlog = 4096
 # net.ipv4.tcp_syncookies = 1
+# net.core.somaxconn = 1024
+# * check that contrib non-free things are in sources.list lines
 
 # CONFIGURATION
 # Base dir where all website files will be located
