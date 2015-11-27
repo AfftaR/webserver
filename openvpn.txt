@@ -1,0 +1,30 @@
+# See also:
+# * https://openvpn.net/index.php/open-source/documentation/howto.html 
+# * http://habrahabr.ru/post/188474/
+
+#zcat /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > server.conf
+# edit server.conf:
+# push "redirect-gateway def1"
+# ca /etc/openvpn/easy-rsa/keys/ca.crt
+# cert /etc/openvpn/easy-rsa/keys/SERVER_server.crt
+# key /etc/openvpn/easy-rsa/keys/SERVER_server.key
+# dh /etc/openvpn/easy-rsa/keys/dh2048.pem
+
+
+
+
+# Client config
+# cd /etc/openvpen
+# cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf .
+# mkdir ${SERVER}_keys
+# scp $SERVER:/etc/openvpn/easy-rsa/keys/ca.crt ${SERVER}_keys
+# scp $SERVER:/etc/openvpn/easy-rsa/${SERVER}_keys_CLIENT_client.crt ${SERVER}_keys
+# scp $SERVER:/etc/openvpn/easy-rsa/${SERVER}_keys_CLIENT_client.key ${SERVER}_keys
+# edit client.conf:
+# remote <server-hostname> 1194
+# ca /etc/openvpn/${SERVER}_keys/ca.crt
+# cert /etc/openvpn/${SERVER}_keys/${SERVER}_${CLIENT}_client.crt
+# key /etc/openvpn/${SERVER}_keys/${SERVER}_${CLIENT}_client.key
+# check connection with openvpn --config client.conf
+# update-rc.d openvpn defaults
+# systemctl start openvpn
