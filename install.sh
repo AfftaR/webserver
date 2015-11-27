@@ -59,8 +59,6 @@ if ! grep -q "jessie" /etc/apt/sources.list; then
     echo '[ERROR] Not found "jessie" in /etc/apt/sources.list'
     exit 1
 fi
-exit 0
-
 
 # Sysctl configuration
 cat >> /etc/sysctl.conf << EOF
