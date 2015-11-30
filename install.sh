@@ -26,6 +26,9 @@
 # net.ipv4.tcp_max_syn_backlog = 4096
 # net.ipv4.tcp_syncookies = 1
 # net.core.somaxconn = 1024
+# select default editor for crontab
+# remove comments from default crontabs of web and root users
+# disable the fucking screen hotkey that locks screen
 
 # CONFIGURATION
 # Base dir where all website files will be located
