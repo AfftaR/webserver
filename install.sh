@@ -46,7 +46,6 @@ INSTALL_NODE="NO"
 INSTALL_MEMCACHED="NO"
 INSTALL_REDIS="NO"
 INSTALL_ELASTICSEARCH="NO"
-INSTALL_SQUID="NO"
 
 if [ $SERVER_NAME == "DEFAULT_SERVER" ]; then
     echo "[ERROR] You forgot to change \$SERVER_NAME variable"
@@ -245,10 +244,6 @@ fi
 
 if [ "$INSTALL_MONGO" == "YES" ]; then
     apt-get install -y mongodb-org
-fi
-
-if [ "$INSTALL_SQUID" == "YES" ]; then
-    apt-get install -y squid
 fi
 
 echo "vim default editor"
@@ -457,28 +452,6 @@ fi
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
     update-rc.d elasticsearch defaults
     /etc/init.d/elasticsearch start
-fi
-
-if [ "$INSTALL_SQUID" == "YES" ]; then
-
-echo 'http_port 10000
-# cache_peer 82.146.51.167 parent 8080 0 no-query default proxy-only login=*:*
-# never_direct allow all
-
-acl localhost src 127.0.0.1/32
-acl all src all
-http_access allow localhost
-http_access deny all
-icp_access deny all
-cache_dir null /tmp
-cache deny all
-access_log /var/log/squid/access.log squid
-via off
-forwarded_for off
-
-acl apache rep_header Server ^Apache
-broken_vary_encoding allow apache' > /etc/squid/squid.conf
-
 fi
 
 # Disable in-memory /tmp which was enabled by default in debian squeeze
