@@ -29,6 +29,7 @@
 # select default editor for crontab
 # remove comments from default crontabs of web and root users
 # disable the fucking screen hotkey that locks screen
+# mongo: enable wiredTiger engine & remove files from /var/lib/mongod
 
 # CONFIGURATION
 # Base dir where all website files will be located
