@@ -30,6 +30,7 @@
 # remove comments from default crontabs of web and root users
 # disable the fucking screen hotkey that locks screen
 # mongo: enable wiredTiger engine & remove files from /var/lib/mongod
+# simple default nginx website for exporting data
 
 # CONFIGURATION
 # Base dir where all website files will be located
@@ -104,7 +105,7 @@ fi
 
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
     wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
-    echo "deb http://packages.elastic.co/elasticsearch/1.5/debian stable main" | tee  /etc/apt/sources.list.d/elasticsearch.list
+    echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | tee /etc/apt/sources.list.d/elasticsearch-2.x.list
 fi
 
 echo "Add noatime to /etc/fstab"
@@ -226,7 +227,7 @@ if [ "$INSTALL_REDIS" == "YES" ]; then
 fi
 
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
-    apt-get install -y elasticsearch
+    apt-get install -y openjdk-7-jre-headless elasticsearch
 fi
 
 # TODO:
@@ -451,8 +452,8 @@ if [ "$INSTALL_MONGO" == "YES" ]; then
 fi
 
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
-    update-rc.d elasticsearch defaults
-    /etc/init.d/elasticsearch start
+    systemctl enable elasticsearch
+    systemctl start elasticsearch
 fi
 
 # Disable in-memory /tmp which was enabled by default in debian squeeze
@@ -464,9 +465,9 @@ fi
 
 # Install custom curl
 cd /root
-wget http://curl.haxx.se/download/curl-7.32.0.tar.gz
-tar zxf curl-7.32.0.tar.gz
-cd curl-7.32.0
+wget http://curl.haxx.se/download/curl-7.46.0.tar.gz
+tar zxf curl-7.46.0.tar.gz
+cd curl-7.46.0
 ./configure --prefix=/opt/curl --enable-ares --without-libssh2\
             --disable-ipv6 --disable-ldap --disable-ldaps\
             --without-librtmp --disable-rtsp --disable-ftp --disable-dict\
