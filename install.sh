@@ -207,7 +207,8 @@ apt-get install -y \
     numactl unrar \
     python3.4 python3.4-dev python3-setuptools \
     pigz nfs-common curl firmware-linux-nonfree \
-    lshw conntrack conntrackd
+    lshw conntrack conntrackd \
+    python3-pyqt4
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     apt-get install -y \
