@@ -38,6 +38,7 @@
 WEB_DIR="/web"
 WEB_USER="web"
 SERVER_NAME="DEFAULT_SERVER"
+NEWRELIC_LICENSE_KEY="NONE"
 
 # Install and configure mongodb
 INSTALL_MONGO="YES"
@@ -48,10 +49,18 @@ INSTALL_NODE="NO"
 INSTALL_MEMCACHED="NO"
 INSTALL_REDIS="NO"
 INSTALL_ELASTICSEARCH="NO"
+INSTALL_NEWRELIC="NO"
 
 if [ $SERVER_NAME == "DEFAULT_SERVER" ]; then
     echo "[ERROR] You forgot to change \$SERVER_NAME variable"
     exit 1
+fi
+
+if [ "$INSTALL_NEWRELIC" == "YES" ]; then
+    if [ $NEWRELIC_LICENSE_KEY == "NONE" ]; then
+        echo "[ERROR] You forgot to change \$NEWRELIC_LICENSE_KEY variable"
+        exit 1
+    fi
 fi
 
 if ! grep -q "non-free" /etc/apt/sources.list; then
@@ -101,6 +110,11 @@ if [ "$INSTALL_MONGO" == "YES" ]; then
     echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" > /etc/apt/sources.list.d/mongodb.list
     # mongo key
     apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+fi
+
+if [ "$INSTALL_NEWRELIC" == "YES" ]; then
+    echo deb http://apt.newrelic.com/debian/ newrelic non-free > /etc/apt/sources.list.d/newrelic.list
+    wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
 fi
 
 if [ "$INSTALL_ELASTICSEARCH" == "YES" ]; then
@@ -247,6 +261,13 @@ fi
 
 if [ "$INSTALL_MONGO" == "YES" ]; then
     apt-get install -y mongodb-org
+fi
+
+if [ "$INSTALL_NEWRELIC" == "YES" ]; then
+    apt-get install -y newrelic-sysmond
+    nrsysmond-config --set license_key=$NEWRELIC_LICENSE_KEY
+    systemctl enable newrelic-sysmond
+    systemctl start newrelic-sysmond
 fi
 
 echo "vim default editor"
