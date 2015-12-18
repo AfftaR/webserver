@@ -75,7 +75,7 @@ fi
 
 # Sysctl configuration
 cat >> /etc/sysctl.conf << EOF
-vm.overcommit_memory=1" >> /etc/sysctl.conf
+vm.overcommit_memory=1
 net.ipv4.netfilter.ip_conntrack_max=1548576
 net.ipv4.netfilter.ip_conntrack_tcp_timeout_established=1200
 net.ipv4.tcp_fin_timeout=20
