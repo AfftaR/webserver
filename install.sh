@@ -31,6 +31,8 @@
 # disable the fucking screen hotkey that locks screen
 # mongo: enable wiredTiger engine & remove files from /var/lib/mongod
 # simple default nginx website for exporting data
+# write server name into global git and hg configs
+# * web@server, root@server
 
 # CONFIGURATION
 # Base dir where all website files will be located
