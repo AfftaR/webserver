@@ -31,8 +31,7 @@
 # disable the fucking screen hotkey that locks screen
 # mongo: enable wiredTiger engine & remove files from /var/lib/mongod
 # simple default nginx website for exporting data
-# write server name into global git and hg configs
-# * web@server, root@server
+# write server name into global config (web@server, root@server)
 
 # CONFIGURATION
 # Base dir where all website files will be located
@@ -532,6 +531,20 @@ iptables -P OUTPUT ACCEPT
 echo "!!! All iptables rules removed !!!"
 ' > /sbin/fw_clear.sh
 chmod u+x /sbin/fw_clear.sh
+
+select-editor
+su web -c select-editor
+
+git config --global push.default simple
+git config --global alias.st status
+git config --global alias.ci commit
+git config --global user.email root@$SERVER_NAME
+git config --global user.name root
+su web -c "git config --global push.default simple"
+su web -c "git config --global alias.st status"
+su web -c "git config --global alias.ci commit"
+su web -c "git config --global user.email root@$SERVER_NAME"
+su web -c "git config --global user.name root"
 
 # TODO: put fw_clear.sh into into /etc/rc.local
 
