@@ -32,6 +32,7 @@
 # mongo: enable wiredTiger engine & remove files from /var/lib/mongod
 # simple default nginx website for exporting data
 # write server name into global config (web@server, root@server)
+# disable swap in /etc/fstab
 
 # CONFIGURATION
 # Base dir where all website files will be located
