@@ -543,8 +543,8 @@ git config --global user.name root
 su web -c "cd /; git config --global push.default simple"
 su web -c "cd /; git config --global alias.st status"
 su web -c "cd /; git config --global alias.ci commit"
-su web -c "cd /; git config --global user.email root@$SERVER_NAME"
-su web -c "cd /; git config --global user.name root"
+su web -c "cd /; git config --global user.email web@$SERVER_NAME"
+su web -c "cd /; git config --global user.name web"
 
 # TODO: put fw_clear.sh into into /etc/rc.local
 
