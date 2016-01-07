@@ -86,13 +86,14 @@ net.ipv4.tcp_keepalive_probes=2
 net.ipv4.tcp_keepalive_intvl=15
 vm.swappiness=1
 net.ipv4.ip_local_port_range="15000 61000"
-#net.core.rmem_max = 16777216
-#net.core.wmem_max = 16777216
 #net.core.rmem_default = 16777216
 #net.core.wmem_default = 16777216
 #net.core.optmem_max = 40960
+#net.core.rmem_max = 16777216
+#net.core.wmem_max = 16777216
 #net.ipv4.tcp_rmem = 4096 87380 16777216
 #net.ipv4.tcp_wmem = 4096 65536 16777216
+#net.ipv4.tcp_max_syn_backlog=4096
 net.ipv4.tcp_no_metrics_save=1
 EOF
 sysctl -p
@@ -109,7 +110,7 @@ wget -O ~/.vimrc http://dumpz.org/25712/nixtext/
 
 if [ "$INSTALL_MONGO" == "YES" ]; then
     echo "Add extra apt repositories"
-    echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" > /etc/apt/sources.list.d/mongodb.list
+    echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb.list
     # mongo key
     apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 fi
