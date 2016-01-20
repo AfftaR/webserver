@@ -225,7 +225,8 @@ apt-get install -y \
     python3.4 python3.4-dev python3-setuptools \
     pigz nfs-common curl firmware-linux-nonfree \
     lshw conntrack conntrackd \
-    python3-pyqt4
+    python3-pyqt4 \
+    gettext
 
 if [ "$INSTALL_POSTGRES" == "YES" ]; then
     apt-get install -y \
