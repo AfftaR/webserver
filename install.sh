@@ -109,10 +109,8 @@ echo "vim config"
 wget -O ~/.vimrc http://dumpz.org/25712/nixtext/
 
 if [ "$INSTALL_MONGO" == "YES" ]; then
-    echo "Add extra apt repositories"
     echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb.list
-    # mongo key
-    apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 fi
 
 if [ "$INSTALL_NEWRELIC" == "YES" ]; then
