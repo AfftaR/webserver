@@ -108,10 +108,9 @@ echo "vim config"
 # Download vim config
 wget -O ~/.vimrc http://dumpz.org/25712/nixtext/
 
-if [ "$INSTALL_MONGO" == "YES" ]; then
-    echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb.list
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-fi
+# Add mongo repo anyway
+echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" > /etc/apt/sources.list.d/mongodb.list
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 
 if [ "$INSTALL_NEWRELIC" == "YES" ]; then
     echo deb http://apt.newrelic.com/debian/ newrelic non-free > /etc/apt/sources.list.d/newrelic.list
