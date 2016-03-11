@@ -17,8 +17,8 @@
 #echo "nameserver 127.0.0.1" > /etc/resolv.conf
 #cat /tmp/resolv.backup >> /etc/resolv.conf
 #chattr +i /etc/resolv.conf
-#systemctl stop named
-#apt-get remove named # WTF?
+#systemctl stop bind9
+#apt-get disable bind9 # WTF?
 #systemctl enable dnsmasq
 #systemctl start dnsmasq
 
